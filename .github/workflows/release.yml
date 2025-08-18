@@ -72,21 +72,21 @@ jobs:
         fail_on_unmatched_files: false
         body: |
           ## What's Changed
-          
+
           See [CHANGELOG.md](CHANGELOG.md) for detailed changes.
-          
+
           ## Installation
-          
+
           ### Via Cargo
           ```bash
           cargo install nw-nu_plugin_ulid
           ```
-          
+
           ### Via Binary
           Download the appropriate binary for your platform from the assets below.
-          
+
           ## Usage
-          
+
           After installation, register the plugin with Nushell:
           ```bash
           plugin add ./nu_plugin_ulid
@@ -177,7 +177,7 @@ jobs:
     steps:
     - name: Download all artifacts
       uses: actions/download-artifact@v4
-      
+
     - name: Upload assets to release
       uses: softprops/action-gh-release@v1
       with:
@@ -210,21 +210,21 @@ jobs:
     - name: Run quality gates before publishing
       run: |
         echo "🔍 Running Quality Gates..."
-        
+
         # Code quality
         echo "📋 Checking code quality..."
         cargo clippy --all-targets --all-features -- -D warnings
         cargo fmt --all --check
-        
+
         # Testing
         echo "🧪 Running tests..."
         cargo test --all-features --release
-        
+
         # Security
         echo "🔒 Security audit..."
         cargo install cargo-audit --locked
         cargo audit
-        
+
         echo "✅ All quality gates passed!"
 
     - name: Publish to crates.io
