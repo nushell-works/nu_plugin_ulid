@@ -61,6 +61,19 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: Delete existing release if it exists
+      run: |
+        echo "Checking for existing release..."
+        if gh release view ${{ github.ref_name }} >/dev/null 2>&1; then
+          echo "Release ${{ github.ref_name }} exists, deleting..."
+          gh release delete ${{ github.ref_name }} --yes
+          echo "Release deleted successfully"
+        else
+          echo "No existing release found"
+        fi
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Create Release
       uses: softprops/action-gh-release@v2
       with:
